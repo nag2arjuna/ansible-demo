@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Ansible register variable basic example
+    shell: minikube status
+    register: find_output
+
+  - debug:
+      var: find_output

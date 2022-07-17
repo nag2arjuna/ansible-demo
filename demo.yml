@@ -9,6 +9,6 @@
     - name: hostname for remote server
       shell: hostname
       register: find_output
+			
     - debug:
       var: find_output
-

@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: minikube
   become: yes
   tasks:
   - name: Ansible register variable basic example

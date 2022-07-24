@@ -1,1 +1,30 @@
+---
+- hosts: dit-server
+  become: yes
+  tasks:
+  - name: stop the application  
+    shell: cd /usr/local/tomcat/bin/; catalina.sh stop
+    register: find_output
 
+  - debug:
+      var: find_output
+      
+  - name: download the latest 
+    shell: cd /tmp; wget http://54.211.229.221:8081/workshp-demo/websocket-demo-0.0.1-SNAPSHOT.jar
+    register: find_output_pods
+
+  - debug:
+      var: find_output_pods
+      
+  - name: deployment
+    shell: mv /usr/local/tomcat/webapps/demo.jar /usr/local/tomcat/webapps/demo.jar-`date` ; cp /tmp/websocket-demo-0.0.1-SNAPSHOT.jar /usr/local/tomcat/webapps/demo.jar
+    register: find_output_pods
+   
+   
+   - name: start appp 
+    shell: cd /usr/local/tomcat/bin/; catalina.sh start
+    register: find_output_pods
+
+   - name: hc 
+    shell: res=`curl -v https://1.1.1.1:8080/health  | grep -i response` ; if [res == "200"] ;then echo "health check is good" else echo"hc is failed" exit fi
+    register: find_output_pods
